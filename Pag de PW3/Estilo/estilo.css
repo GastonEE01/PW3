@@ -1,0 +1,109 @@
+body {
+    background-color: #1e1e2f;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    padding: 20px;
+    background-color: #2c2c3e;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+button {
+    background-color: #4e4ec2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #6666ff;
+}
+
+main {
+    padding: 20px;
+}
+
+h2 {
+    margin-top: 40px;
+}
+
+.fila-parcial {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre iframes */
+    margin-bottom: 40px;
+    flex-wrap: wrap; /* Para pantallas chicas */
+}
+
+.fila-parcial iframe {
+    width: 45%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+h3{
+    text-align: start;
+}
+/*
+Clase 6 : teorica 
+Pasaje de datos 
+
+Intruccion.
+Pasar datos Controller => Vista 
+
+View Data 
+ViewBag 
+
+Es utilizado para el 
+mañana vemos eso de view bag completo 
+view model : es un patron de visualizacion
+el view model es especifico para ver da cada vista ,son 2 conceptos para separar responsabilidades 
+no es obligatorio  usar el view model 
+redirectionAction devuelve un controlador
+
+
+Controller -> redirect va view data ,del controlador a la vista , de view a controlador se pasa por parametro URL (EJEMPLO)
+
+Variables de sesion (ASP .NET 4.X) 
+ se setea con String.Empty
+Se guardan en algun lugar : 
+
+
+stateServer: lo guarda en el servidor ,un servicio que se llama ASP.NET  ,los datos se pasan por http sobre un puerto tcp 
+
+Custom permite especificar un proveedor de almacenamiento 
+que son las variables de sesion ,hay distintos modos 
+
+ASP.NET CORE (es lo que vamos a usar):
+La cookie de sesion es especifica del navegador .Las sesiones no se comparten entre navegadores.
+La aplicacion retiene una sesion por un tiempo limitado(timeout) despues de la utlima solicitud.
+
+Hacer una llama de addSession(options => ... ) en el program.cs 
+en los archivos usar una libreria using Microsoft.AspNetCore.http;
+
+Para almacenar en sesion otros tipo de datos mas complejos es necesario serializar y deserializar los mismo,por ejemplo mediante un json : 
+
+Escalabilidad de variables de sesion : 
+ No es tan importante esto de variable de sesion tan especifica pero si entra y puede dar preguntas de parcial ,entra seguido 
+
+ TEMA PARCIAL(IMPORTANTE) : REPASAR EL TEMA DE RUTEO ,PASAJE DE DATOS PARCIAL, HORA 19:00 ,ES LARGO SALON 215 (EL DE SIEMPRE)
+*/
