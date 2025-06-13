@@ -1,109 +1,150 @@
-body {
-    background-color: #1e1e2f;
-    color: #f0f0f0;
-    font-family: Arial, sans-serif;
+/* Reset general */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: black;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
     text-align: center;
 }
 
-header {
-    padding: 20px;
-    background-color: #2c2c3e;
-}
-
-h1 {
-    margin: 0;
-    font-size: 2rem;
-}
-
-nav {
-    margin-top: 10px;
-}
-
-button {
-    background-color: #4e4ec2;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-button:hover {
-    background-color: #6666ff;
-}
-
-main {
-    padding: 20px;
-}
-
-h2 {
-    margin-top: 40px;
-}
-
-.fila-parcial {
+/* Navegación */
+.botonera {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Espacio entre iframes */
-    margin-bottom: 40px;
-    flex-wrap: wrap; /* Para pantallas chicas */
+    gap: 20px;
+    margin: 1rem 0;
 }
 
-.fila-parcial iframe {
-    width: 45%;
-    height: 500px;
+.botonera a button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #3498db;
+    color: white;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-h3{
-    text-align: start;
+.botonera a button:hover {
+    background-color: #2980b9;
 }
-/*
-Clase 6 : teorica 
-Pasaje de datos 
 
-Intruccion.
-Pasar datos Controller => Vista 
+/* Layout principal */
+.container {
+    display: flex;
+    height: calc(100vh - 160px);
+}
 
-View Data 
-ViewBag 
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: brown;
+    padding: 1rem;
+    overflow-y: auto;
+}
 
-Es utilizado para el 
-mañana vemos eso de view bag completo 
-view model : es un patron de visualizacion
-el view model es especifico para ver da cada vista ,son 2 conceptos para separar responsabilidades 
-no es obligatorio  usar el view model 
-redirectionAction devuelve un controlador
+.clase-button, .submenu-button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+}
 
+.clase-button {
+    background-color: #3498db;
+    color: white;
+}
 
-Controller -> redirect va view data ,del controlador a la vista , de view a controlador se pasa por parametro URL (EJEMPLO)
+.clase-button:hover {
+    background-color: #2980b9;
+}
 
-Variables de sesion (ASP .NET 4.X) 
- se setea con String.Empty
-Se guardan en algun lugar : 
+.submenu-button {
+    background-color: #95a5a6;
+    color: white;
+    margin-left: 20px;
+}
 
+.submenu-button:hover {
+    background-color: #7f8c8d;
+}
 
-stateServer: lo guarda en el servidor ,un servicio que se llama ASP.NET  ,los datos se pasan por http sobre un puerto tcp 
+/* Visor de PDFs */
+.pdfviewer {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
 
-Custom permite especificar un proveedor de almacenamiento 
-que son las variables de sesion ,hay distintos modos 
+/* Disposición en dos columnas */
+.pdfviewer.dos-columnas {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px;
+}
 
-ASP.NET CORE (es lo que vamos a usar):
-La cookie de sesion es especifica del navegador .Las sesiones no se comparten entre navegadores.
-La aplicacion retiene una sesion por un tiempo limitado(timeout) despues de la utlima solicitud.
+.pdfviewer.dos-columnas iframe {
+    flex: 1 1 48%;
+    height: 600px;
+    border: none;
+}
 
-Hacer una llama de addSession(options => ... ) en el program.cs 
-en los archivos usar una libreria using Microsoft.AspNetCore.http;
+/* Disposición en una columna */
+.pdfviewer:not(.dos-columnas) {
+    flex-direction: column;
+    align-items: center;
+}
 
-Para almacenar en sesion otros tipo de datos mas complejos es necesario serializar y deserializar los mismo,por ejemplo mediante un json : 
+.pdfviewer:not(.dos-columnas) iframe {
+    width: 90%;
+    max-width: 900px;
+    height: 800px;
+    border: none;
+}
 
-Escalabilidad de variables de sesion : 
- No es tan importante esto de variable de sesion tan especifica pero si entra y puede dar preguntas de parcial ,entra seguido 
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
 
- TEMA PARCIAL(IMPORTANTE) : REPASAR EL TEMA DE RUTEO ,PASAJE DE DATOS PARCIAL, HORA 19:00 ,ES LARGO SALON 215 (EL DE SIEMPRE)
-*/
+    .sidebar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .pdfviewer.dos-columnas iframe {
+        flex: 1 1 100%;
+        height: 500px;
+    }
+
+    .pdfviewer:not(.dos-columnas) iframe {
+        width: 100%;
+        height: 600px;
+    }
+}

@@ -1,79 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Estilo/estilo.css">
-    <title>Parciales teoricos y consignas practicas</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./Estilo/estilo.css">
+  <title>Visualizador de PDFs</title>
 </head>
 <body>
-    <header>
-        <h1>Programacion web 3</h1>
-        <nav>
-            <a href="index.html"><button>Parcial</button></a>
-        </nav>
-    </header>
 
-    <main>
-        <h2>Primer parcial</h2>
-        <h3>Teórico:</h3>
+  <header>
+    <h1>Programacion web 3 </h1>
+  </header>
 
-        <!-- Parcial 1 (enunciado y respuesta) -->
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 teoria/primer_parcial_teorico.pdf"></iframe>
-            <iframe src="Parciales/Parcial 1 teoria/Parcial teorico 1 respuesta.pdf"></iframe>
-        </div>
+  <div class="botonera">
+    <a href="#"><button>Inicio</button></a>
+    <a href="#"><button>Contacto</button></a>
+  </div>
 
-        <!-- Otro parcial o recuperatorio -->
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 teoria/primer_parcial_teorico_1.pdf"></iframe>
-            <iframe src="Parciales/Parcial 1 teoria/Parcial teorico 2 respuesta.pdf"></iframe>
-        </div>
+  <div class="container">
+    <div class="sidebar">
+      <button class="clase-button" onclick="mostrarOpciones(this, 'primer')">Primer Parcial</button>
+      <button class="clase-button" onclick="mostrarOpciones(this, 'segundo')">Segundo Parcial</button>
+    </div>
+    <div class="pdfviewer" id="pdf-container"></div>
+  </div>
 
-        <h3>Practico:</h3>
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 practica consignas/primer_parcial_calculador_pañales.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+  <script>
+    // === SCRIPT COMPLETO ===
 
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 practica consignas/primer_parcial_calculadora.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+    let parcialSeleccionado = "";
+    let submenusActivos = {};
 
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 practica consignas/primer_parcial_registro_aduanero.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+    function mostrarOpciones(boton, parcial) {
+      parcialSeleccionado = parcial;
 
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 practica consignas/primer_parcial_registro_de_ventas.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+      if (submenusActivos[parcial]) {
+        submenusActivos[parcial].remove();
+        delete submenusActivos[parcial];
+        return;
+      }
 
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 1 practica consignas/primer_parcial_reserva_de_viajes.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+      const submenu = document.createElement("div");
+      submenu.style.marginBottom = "10px";
+      submenu.innerHTML = `
+        <button class="submenu-button" onclick="mostrarPdfTeoria('${parcial}')">Teoría</button>
+        <button class="submenu-button" onclick="mostrarPdfPractica('${parcial}')">Práctica</button>
+      `;
 
-        <h2>Segundo parcial</h2>
-        <h3>Teorico</h3>
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 2 teoria/a"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+      boton.insertAdjacentElement("afterend", submenu);
+      submenusActivos[parcial] = submenu;
+    }
 
-        <h3>Practico</h3>
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 2 practica consignas/segundo_parcial_gestión_empleados.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+    function mostrarPdfTeoria(parcial) {
+      aplicarEstiloDeVisualizacion(parcial, 'teoria');
 
-        <div class="fila-parcial">
-            <iframe src="./Parciales/Parcial 2 practica consignas/2024_rec_segundo_parcial_gestion_pilotos.pdf"></iframe>
-            <iframe src=".aa"></iframe>
-        </div>
+      const pdfs = {
+        primer: [
+          "https://drive.google.com/file/d/1KCs8IFIUih9_8pkYfoL4uYJvdJ-Zb9CT/preview",
+          "https://drive.google.com/file/d/1ANg7BJJ3koxO7qpDZ3sShKg5llG2akIN/preview",
+          "https://drive.google.com/file/d/1Ybw5bwpqgpZDGCxlYX1MUVkuDj3aoy1e/preview",
+          "https://drive.google.com/file/d/1yET5sCiZtR5IWnhF5mpEshWkJCoFioMk/preview"
+        ],
+        segundo: [
+          "https://drive.google.com/file/d/1SnwxpYLwj3sD_qztRGBosNSpvMgVu9gv/preview",
+          "https://drive.google.com/file/d/1jyCkMniFSnNLdIcTQvGO6C04SZs7exuN/preview"
+        ]
+      };
 
-    </main>
+      cargarPDFs(pdfs[parcial] || []);
+    }
+
+    function mostrarPdfPractica(parcial) {
+      aplicarEstiloDeVisualizacion(parcial, 'practica');
+
+      const pdfs = {
+        primer: [
+          "https://drive.google.com/file/d/1HHmlx3oixPKYNxvEu2laq2pHXqemLs3a/preview",
+          "https://drive.google.com/file/d/10epmAat-mtXrmlM631WAwcBNlzkwzuPt/preview",
+          "https://drive.google.com/file/d/1EFnnle_g4qgreEpAa97-L0lBRkCrocj3/preview",
+          "https://drive.google.com/file/d/1zBSiTmkj2W9RnxZCb0k9VR8hFLhsatcQ/preview",
+          "https://drive.google.com/file/d/1WSrWrnmSbuM95iChx2vNWVi69d8rqh9V/preview"
+        ],
+        segundo: [
+          "https://drive.google.com/file/d/1_AN1BBE4o2p7ZGEogUGZJ3fHBLTR6XiI/preview",
+          "https://drive.google.com/file/d/1eSVfucQWBT8EVy4jOS0SjmbOa5l88yvt/preview"
+        ]
+      };
+
+      cargarPDFs(pdfs[parcial] || []);
+    }
+
+    function cargarPDFs(archivos) {
+      const html = archivos.map(src => `<iframe src="${src}" allow="autoplay"></iframe>`).join('');
+      document.getElementById("pdf-container").innerHTML = html;
+    }
+
+    function aplicarEstiloDeVisualizacion(parcial, tipo) {
+      const container = document.getElementById("pdf-container");
+
+      const enFila = (parcial === "primer" && tipo === "teoria");
+
+      if (enFila) {
+        container.classList.add("dos-columnas");
+      } else {
+        container.classList.remove("dos-columnas");
+      }
+    }
+  </script>
+
 </body>
 </html>
