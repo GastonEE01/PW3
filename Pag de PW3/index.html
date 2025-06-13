@@ -2,13 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./Estilo/estilo.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visualizador de PDFs</title>
+  <link rel="stylesheet" href="Estilo/estilo.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
   <header>
-    <h1>Programacion web 3 </h1>
+    <h1>Programacion web 3</h1>
   </header>
 
   <div class="botonera">
@@ -18,94 +19,54 @@
 
   <div class="container">
     <div class="sidebar">
-      <button class="clase-button" onclick="mostrarOpciones(this, 'primer')">Primer Parcial</button>
-      <button class="clase-button" onclick="mostrarOpciones(this, 'segundo')">Segundo Parcial</button>
+      <!-- Primer Parcial -->
+      <div class="sidebar-item">
+        <button class="parcial-button" data-parcial="primer">
+          <i class="fas fa-file-alt"></i>
+          <span>Primer Parcial</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="submenu" id="submenu-primer">
+          <button class="submenu-button" data-parcial="primer" data-tipo="teoria">
+            <i class="fas fa-book"></i>
+            <span>Teoría</span>
+          </button>
+          <button class="submenu-button" data-parcial="primer" data-tipo="practica">
+            <i class="fas fa-file-alt"></i>
+            <span>Práctica</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Segundo Parcial -->
+      <div class="sidebar-item">
+        <button class="parcial-button" data-parcial="segundo">
+          <i class="fas fa-file-alt"></i>
+          <span>Segundo Parcial</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="submenu" id="submenu-segundo">
+          <button class="submenu-button" data-parcial="segundo" data-tipo="teoria">
+            <i class="fas fa-book"></i>
+            <span>Teoría</span>
+          </button>
+          <button class="submenu-button" data-parcial="segundo" data-tipo="practica">
+            <i class="fas fa-file-alt"></i>
+            <span>Práctica</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="pdfviewer" id="pdf-container"></div>
+
+    <div class="pdfviewer" id="pdf-container">
+      <div class="empty-state">
+        <i class="fas fa-file-pdf"></i>
+        <h2>Selecciona un parcial y tipo para ver los PDFs</h2>
+      </div>
+    </div>
   </div>
 
-  <script>
-    // === SCRIPT COMPLETO ===
-
-    let parcialSeleccionado = "";
-    let submenusActivos = {};
-
-    function mostrarOpciones(boton, parcial) {
-      parcialSeleccionado = parcial;
-
-      if (submenusActivos[parcial]) {
-        submenusActivos[parcial].remove();
-        delete submenusActivos[parcial];
-        return;
-      }
-
-      const submenu = document.createElement("div");
-      submenu.style.marginBottom = "10px";
-      submenu.innerHTML = `
-        <button class="submenu-button" onclick="mostrarPdfTeoria('${parcial}')">Teoría</button>
-        <button class="submenu-button" onclick="mostrarPdfPractica('${parcial}')">Práctica</button>
-      `;
-
-      boton.insertAdjacentElement("afterend", submenu);
-      submenusActivos[parcial] = submenu;
-    }
-
-    function mostrarPdfTeoria(parcial) {
-      aplicarEstiloDeVisualizacion(parcial, 'teoria');
-
-      const pdfs = {
-        primer: [
-          "https://drive.google.com/file/d/1KCs8IFIUih9_8pkYfoL4uYJvdJ-Zb9CT/preview",
-          "https://drive.google.com/file/d/1ANg7BJJ3koxO7qpDZ3sShKg5llG2akIN/preview",
-          "https://drive.google.com/file/d/1Ybw5bwpqgpZDGCxlYX1MUVkuDj3aoy1e/preview",
-          "https://drive.google.com/file/d/1yET5sCiZtR5IWnhF5mpEshWkJCoFioMk/preview"
-        ],
-        segundo: [
-          "https://drive.google.com/file/d/1SnwxpYLwj3sD_qztRGBosNSpvMgVu9gv/preview",
-          "https://drive.google.com/file/d/1jyCkMniFSnNLdIcTQvGO6C04SZs7exuN/preview"
-        ]
-      };
-
-      cargarPDFs(pdfs[parcial] || []);
-    }
-
-    function mostrarPdfPractica(parcial) {
-      aplicarEstiloDeVisualizacion(parcial, 'practica');
-
-      const pdfs = {
-        primer: [
-          "https://drive.google.com/file/d/1HHmlx3oixPKYNxvEu2laq2pHXqemLs3a/preview",
-          "https://drive.google.com/file/d/10epmAat-mtXrmlM631WAwcBNlzkwzuPt/preview",
-          "https://drive.google.com/file/d/1EFnnle_g4qgreEpAa97-L0lBRkCrocj3/preview",
-          "https://drive.google.com/file/d/1zBSiTmkj2W9RnxZCb0k9VR8hFLhsatcQ/preview",
-          "https://drive.google.com/file/d/1WSrWrnmSbuM95iChx2vNWVi69d8rqh9V/preview"
-        ],
-        segundo: [
-          "https://drive.google.com/file/d/1_AN1BBE4o2p7ZGEogUGZJ3fHBLTR6XiI/preview",
-          "https://drive.google.com/file/d/1eSVfucQWBT8EVy4jOS0SjmbOa5l88yvt/preview"
-        ]
-      };
-
-      cargarPDFs(pdfs[parcial] || []);
-    }
-
-    function cargarPDFs(archivos) {
-      const html = archivos.map(src => `<iframe src="${src}" allow="autoplay"></iframe>`).join('');
-      document.getElementById("pdf-container").innerHTML = html;
-    }
-
-    function aplicarEstiloDeVisualizacion(parcial, tipo) {
-      const container = document.getElementById("pdf-container");
-
-      const enFila = (parcial === "primer" && tipo === "teoria");
-
-      if (enFila) {
-        container.classList.add("dos-columnas");
-      } else {
-        container.classList.remove("dos-columnas");
-      }
-    }
-  </script>
-
+  <script src="./JS/script.js"></script>
 </body>
 </html>
+
